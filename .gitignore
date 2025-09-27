@@ -1,0 +1,14 @@
+# Ignore Ren'Py engine and temp
+renpy/
+lib/
+tmp/
+saves/
+**/persistent
+
+# Ignore compiled files
+*.rpyc
+*.rpa
+
+# Ignore distribution builds
+dist/
+build/
