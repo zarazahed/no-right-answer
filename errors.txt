@@ -2,9 +2,9 @@
 errors listed below, and try again.
 
 
-File "game/script.rpy", line 168: ATL statement contains two expressions in a row; is one of them a misspelled property? If not, separate them with pass.
-    jump death
-              ^
+File "game/script.rpy", line 175: Line is indented, but the preceding say statement statement does not expect a block. Please check this line's indentation. You may have forgotten a colon (:).
+    scene bg boardinglifeboat
+    ^
 
 Ren'Py Version: Ren'Py 8.3.7.25031702
-Sat Sep 27 13:54:28 2025
+Sat Sep 27 23:16:34 2025

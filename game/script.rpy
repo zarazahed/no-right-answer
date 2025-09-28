@@ -11,17 +11,29 @@ define t = Character("Teacher")
 define rbm = Character("Rich business man")
 define cm = Character("Crew member")
 define m = Character("Mother")
-define b = Character("Baby")
+define b = Character("Child")
 define fa = Character("Flight attendant")
 define c = Character("Captain")
-
-
+define ssd = Character("Ship victim")
 define unknown = Character("???")
 
+image bg whale = im.Scale("images/whale.png", 1920, 1080)
+image bg outsideboat = im.Scale("images/outsideboat.png", 1920, 1080)
+image bg roomonship = im.Scale("images/roomoneship.png", 1920, 1080)
+image bg venuedoors = im.Scale("images/venuedoors.png", 1920, 1080)
+image bg airport = im.Scale("images/airport.png", 1920, 1080)
+image bg daydreamcity = im.Scale("images/daydreamcity.png", 1920, 1080)
+image bg lifeboat = im.Scale("images/lifeboat.png", 1920, 1080)
+image bg boardinglifeboat = im.Scale("images/boardinglifeboat.png", 1920, 1080)
+image bg bedroom = im.Scale("images/bedroom.png", 1920, 1080)
+image bg airplane = im.Scale("images/airplane.png", 1920, 1080)
+image bg rm1 = im.Scale("images/rm1.png", 1920, 1080)
+image bg trolley = im.Scale("images/trolley.png", 1920, 1080)
 
-# The game starts here.
 
 label start:
+
+    stop music fadeout 1.0
 
     "Your nearest Daydream event is starting tomorrow. You’re all packed, and now you just need to get to your flight."
 
@@ -31,19 +43,21 @@ label start:
 
     scene bg bedroom
 
-    play sound "audio/alarm.mp3"
+    play music "audio/alarm.mp3"
 
     y "Shoot. My alarm was an hour late… I’ve got to hurry."
 
-    stop sound
+    stop music fadeout 1.0
 
     "You throw in your airpods and get ready for your day."
+
+    play music "yippee.mp3"
 
     scene black with fade
 
     pause 1.0
 
-    scene bg trolleystop
+    scene bg trolley
 
     y "Where’s the schedule? Ugh… I might miss my flight at this rate."
 
@@ -57,7 +71,7 @@ label start:
 
     rm "PLEASE! Please help!"
 
-    y "Um… okay, hold on, let me think."
+    y "Uhh… okay, hold on, let me think."
 
     unknown "No! What are you doing?"
 
@@ -75,13 +89,13 @@ label start:
 
     y "Okay, okay, I get it! Gosh."
 
-    "You turn. Currently, the trolley is on track to kill the five people."
+    "You turn. Currently, the trolley is on track to kill the man."
 
-    y "Uh. I’ve got some really bad news for you guys."
+    y "Uh. I’ve got some really bad news for you."
 
-    rm "Please!! Don't pull the lever! I’m begging you… I have a family… They need me."
+    rm "Please!! Pull the lever! I’m begging you… I have a family… They need me."
 
-    rl "NO! We have lives too!! Please redirect it! I have six… wait, no, seven mouths to feed at home."
+    rl "NO! We have lives too!! Please don't redirect it! I have six… wait, no, seven mouths to feed at home."
 
     y "Haha… like… six seven?"
 
@@ -105,21 +119,20 @@ label start:
 
     "The sounds of the trolley are getting closer and closer."
 
-    "Will you push the lever?"
+    "If you don't push the lever, one man dies. If you do not, five people die. Will you push the lever?"
 
-menu: 
-
-    "Yes":
+menu(time=7, timeout="fivedies"): 
+    "No":
         jump mandies
 
-    "No":
+    "Yes":
         jump fivedies
 
 label mandies:
 
     "You don’t touch the lever."
 
-    "Five people have lost their lives."
+    "Five people have been saved, at the cost of one precious human life."
 
     "Your trolley arrives, finally. You’re not even late! #vacationgoals"
 
@@ -131,7 +144,7 @@ label fivedies:
 
     "You pull the lever."
 
-    "Five people have been saved, at the cost of one precious human life."
+    "Five people have lost their lives."
 
     "Your trolley arrives, finally. You’re not even late! #vacationgoals"
 
@@ -155,17 +168,17 @@ label lifeboat:
 
     scene black with fade
 
-    scene bg boatoutside
+    scene bg boardinglifeboat
 
     "You go outside. People are yelling, water is rising below your feet."
 
-    scene bg safetyboat
+    scene bg boardinglifeboat
 
     cm "There is one safety boat, it holds five people, and we are seven. We are too far from the shore for anyone to swim back, and help will be here in an hour. The water is too cold to be in for that long."
 
     "You are faced with a choice. Two people will lose their lives. It is your choice who loses their lives."
 
-menu:
+menu(time=7, timeout="savednoone"):
 
     "Save one person":
         jump saveperson
@@ -173,11 +186,21 @@ menu:
     "Save yourself":
         jump saveyourself
 
+label savednoone:
+
+    scene black with fade
+
+    scene bg whale
+
+    "You did nothing, and drowned."
+
+    jump death 
+
 label saveperson:
 
     scene black with fade
 
-    scene bg underwater
+    scene bg whale
 
     "Your bravery has helped one person reach their loved ones safely. On the other hand, you do not know how to swim, so you lose your life with water in your lungs."
     
@@ -189,7 +212,7 @@ label saveyourself:
 
     scene black with fade
 
-    scene bg onthelifeboat
+    scene bg lifeboat
 
     "You get on the lifeboat, and two people have lost their lives."
 
@@ -209,7 +232,7 @@ label airport:
 
     scene bg airplane
 
-    "Oh my goodness why is my seat next to a kid?? If it starts crying… I might not make it to DayDream… or home …. for a while…"
+    "Oh my goodness why is my seat next to a kid?? If it starts crying… I might not make it to Daydream… or home …. for a while…"
 
     m "I have to use the restroom. Can you please look after him? It will be less than 5 minutes, I promise."
 
@@ -227,7 +250,7 @@ label airport:
 
     y "Good now it’s crying."
 
-menu:
+menu(time=7, timeout="masknoone"):
 
     "Help the child":
         jump maskchild
@@ -235,15 +258,23 @@ menu:
     "Help yourself":
         jump maskyourself
 
+label masknoone:
+
+    "You didn't help yourself or the child with your masks. You both died because of the smoke."
+
+    jump death
+
 label maskchild:
 
     "Your brave act has saved the child, but you have lost your life in the process."
+
+    jump death
 
 label maskyourself:
 
     "When you turn to help the child, you find that it is too late."
 
-    "They have both died of smoke inhalation."
+    "They have died of smoke inhalation."
 
     fa "The cabin has been cleared of smoke, and we will continue with our flight as usual."
 
@@ -255,13 +286,60 @@ label maskyourself:
 
     "You have made it to the city where your DayDream is hosted. You now leave to make it there on time."
 
-    scene bg daydreamvenue
+    scene bg venuedoors
 
-    "But you have made some bad choices."
+    "..."
+
+    "But you have made some tragic choices."
+
+    jump end
+
+label end:
+
+    scene black
+
+    scene bg idk
+
+    play music "audio/ending.mp3"
+
+    rm "My daughter had such a bright future that I wished I could’ve seen. Maybe she could have been an artist, pilot, engineer, chef, or scientist. All I can hope is that the family that adopts her is good to her."
+
+    scene bg rm1
+
+    rg "My parents never cared much for me and my siblings. As the eldest, I was the one who took care of them. Because I never came home, they’re now stuck in that household with no one to take care of them for another decade."
+
+    rl "We never got to celebrate our first anniversary… it had always been my dream to start a family. Maybe it wasn’t meant to be."
+
+    t "My students were going to give me a goodbye party because I have deadly cancer. Now they will never see me for the last time to say their last goodbyes."
+
+    rbm "Thousands of elderly people worldwide could have benefitted from the cures we were working on. But now… there’s not much that can be done."
+
+    ssd "With your selfish choice, I was eaten by a whale. I now cannot go home to start college. My parents also lost their only child, who they gave everything to give an education to."
+
+    m "My husband has committed suicide because he lost me and his son in the same flight. His parents now suffer in the retirement home because there is no one to help them survive financially."
+
+    b "I was going to find out how we stop pollution worldwide, saving many in large cities from dying of air pollution."
+
+    "Well."
+
+    "That's really something, isn't it?"
+
+    "Our actions really do have consequences, don't they?"
+
+    jump death
 
 label death:
+
+    stop music fadeout 1.0
+
+    scene black with fade
+
+    play music "audio/shouldn't you be asleep.mp3"
+
+    "Thank you for playing."
 
     scene black with fade
 
     return
+
 

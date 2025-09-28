@@ -202,6 +202,9 @@ init python:
 
 # define build.google_play_key = "..."
 
+init python:
+    config.main_menu_music = "audio/2018__.mp3"
+
 
 ## The username and project name associated with an itch.io project, separated
 ## by a slash.
