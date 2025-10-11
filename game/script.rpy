@@ -29,7 +29,22 @@ image bg bedroom = im.Scale("images/bedroom.png", 1920, 1080)
 image bg airplane = im.Scale("images/airplane.png", 1920, 1080)
 image bg rm1 = im.Scale("images/rm1.png", 1920, 1080)
 image bg trolley = im.Scale("images/trolley.png", 1920, 1080)
+image bg rm2 = im.Scale("images/rm2.png", 1920, 1080)
+image bg rl2 = im.Scale("images/rl2.png", 1920, 1080)
+image bg rg2 = im.Scale("images/rg2.png", 1920, 1080)
 
+image bg t2 = im.Scale("images/t2.png", 1920, 1080)
+image bg rbm2 = im.Scale("images/rbm2.png", 1920, 1080)
+image bg cm1 = im.Scale("images/cm1.png", 1920, 1080)
+image bg cm2 = im.Scale("images/cm2.png", 1920, 1080)
+
+image bg mb1 = im.Scale("images/mb1.png", 1920, 1080)
+image bg mb2 = im.Scale("images/mb2.png", 1920, 1080)
+
+image bg b1 = im.Scale("images/b1.png", 1920, 1080)
+image bg b2 = im.Scale("images/b2.png", 1920, 1080)
+
+default choice = "mandies"
 
 label start:
 
@@ -65,6 +80,8 @@ label start:
 
     "You peer down to see the tracks."
 
+    scene bg rm2
+
     rm " I’ve been tied to the tracks - a trolley is coming soon. Go get help! QUICK!"
 
     y "Well uhh, I don’t know man. I’ve got to catch that trolley, you know?"
@@ -77,13 +94,17 @@ label start:
 
     unknown "Yeah! Help US!"
 
-    "You slowly turn to see the other branch of the train track. And there lies… five people."
+    "You slowly turn to see the other branch of the train track. And there lies… four people."
 
     y "Alright, what the flip."
 
     "Well well well. NOW what will you do?"
 
+    scene bg rg2
+
     rg "There’s a lever there! Right to your left!"
+
+    scene bg rl2
 
     rl "HURRY UP!!"
 
@@ -103,15 +124,27 @@ label start:
 
     "You walk to see each one of them. That seems like the right thing to do. You wouldn’t want to save a bad person, would you?"
 
-    t "Come on, man. One person is a small sacrifice to make… just be logical…"
+    scene bg t2
+
+    t "Come on... One person is a small sacrifice to make… just be logical…"
+
+    scene bg rl2
 
     rl "Please… think of my kids… they need me."
 
+    scene bg rg2
+
     "The random girl appears to have passed out from fear. Not really helping her case."
+
+    scene bg rbm2
 
     rbm "My company is working to develop a cure for a highly contagious disease. If I die, things will fall apart..."
 
+    scene bg trolley
+
     y "Okay, convincing. Now, your turn. Why do you think I SHOULD switch the lever?"
+
+    scene bg rm2
 
     rm "My daughter… She's my whole world. Please. I don’t want to die…"
 
@@ -119,20 +152,24 @@ label start:
 
     "The sounds of the trolley are getting closer and closer."
 
-    "If you don't push the lever, one man dies. If you do not, five people die. Will you push the lever?"
+    "If you don't push the lever, one man dies. If you do not, four people die. Will you push the lever?"
 
-menu(time=7, timeout="fivedies"): 
+menu(time=7, timeout="mandies"): 
     "No":
         jump mandies
 
     "Yes":
         jump fivedies
+        $ choice = "fivedies"
+
 
 label mandies:
 
+    scene bg trolley
+
     "You don’t touch the lever."
 
-    "Five people have been saved, at the cost of one precious human life."
+    "Four people have been saved, at the cost of one precious human life."
 
     "Your trolley arrives, finally. You’re not even late! #vacationgoals"
 
@@ -142,9 +179,11 @@ label mandies:
 
 label fivedies:
 
+    scene bg trolley
+
     "You pull the lever."
 
-    "Five people have lost their lives."
+    "Four people have lost their lives."
 
     "Your trolley arrives, finally. You’re not even late! #vacationgoals"
 
@@ -168,11 +207,11 @@ label lifeboat:
 
     scene black with fade
 
-    scene bg boardinglifeboat
+    scene bg outsideboat
 
     "You go outside. People are yelling, water is rising below your feet."
 
-    scene bg boardinglifeboat
+    scene bg cm1
 
     cm "There is one safety boat, it holds five people, and we are seven. We are too far from the shore for anyone to swim back, and help will be here in an hour. The water is too cold to be in for that long."
 
@@ -216,7 +255,11 @@ label saveyourself:
 
     "You get on the lifeboat, and two people have lost their lives."
 
+    show cm2
+
     cm "Help is on the way, remain where you are."
+
+    hide cm2
 
     jump airport
 
@@ -230,13 +273,21 @@ label airport:
 
     scene black with fade
 
-    scene bg airplane
+    scene bg mb1
 
     "Oh my goodness why is my seat next to a kid?? If it starts crying… I might not make it to Daydream… or home …. for a while…"
 
     m "I have to use the restroom. Can you please look after him? It will be less than 5 minutes, I promise."
 
     y "Yeah, sure!"
+
+    scene bg b1
+
+    y "Good now it’s crying."
+
+    scene black with fade
+
+    scene bg b1
 
     "Two minutes have passed, and she is still in the restroom."
 
@@ -247,8 +298,6 @@ label airport:
     y "Where is this thing’s mom?"
 
     y "What do I do with it?"
-
-    y "Good now it’s crying."
 
 menu(time=7, timeout="masknoone"):
 
@@ -272,9 +321,15 @@ label maskchild:
 
 label maskyourself:
 
+    scene bg b2
+
     "When you turn to help the child, you find that it is too late."
 
     "They have died of smoke inhalation."
+
+    scene bg mb2
+
+    m "*screams*"
 
     fa "The cabin has been cleared of smoke, and we will continue with our flight as usual."
 
@@ -302,17 +357,21 @@ label end:
 
     play music "audio/ending.mp3"
 
-    rm "My daughter had such a bright future that I wished I could’ve seen. Maybe she could have been an artist, pilot, engineer, chef, or scientist. All I can hope is that the family that adopts her is good to her."
+    scene black with fade
 
-    scene bg rm1
+    if choice == "mandies":
 
-    rg "My parents never cared much for me and my siblings. As the eldest, I was the one who took care of them. Because I never came home, they’re now stuck in that household with no one to take care of them for another decade."
+        rm "My daughter had such a bright future that I wished I could’ve seen. Maybe she could have been an artist, pilot, engineer, chef, or scientist. All I can hope is that the family that adopts her is good to her."
 
-    rl "We never got to celebrate our first anniversary… it had always been my dream to start a family. Maybe it wasn’t meant to be."
+    elif choice == "fivedies":
 
-    t "My students were going to give me a goodbye party because I have deadly cancer. Now they will never see me for the last time to say their last goodbyes."
+        rg "My parents never cared much for me and my siblings. As the eldest, I was the one who took care of them. Because I never came home, they’re now stuck in that household with no one to take care of them for another decade."
 
-    rbm "Thousands of elderly people worldwide could have benefitted from the cures we were working on. But now… there’s not much that can be done."
+        rl "We never got to celebrate our first anniversary… it had always been my dream to start a family. Maybe it wasn’t meant to be."
+
+        t "My students were going to give me a goodbye party because I have deadly cancer. Now they will never see me for the last time to say their last goodbyes."
+
+        rbm "Thousands of elderly people worldwide could have benefitted from the cures we were working on. But now… there’s not much that can be done."
 
     ssd "With your selfish choice, I was eaten by a whale. I now cannot go home to start college. My parents also lost their only child, who they gave everything to give an education to."
 
